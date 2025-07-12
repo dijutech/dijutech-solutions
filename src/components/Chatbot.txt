@@ -1,0 +1,327 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { MessageCircle, Send, X, User, Bot, Phone, Mail, MapPin } from 'lucide-react';
+import { ChatbotService } from '../services/chatbot';
+import { ChatSession, ChatMessage, Customer } from '../types';
+import { motion, AnimatePresence } from 'framer-motion';
+
+interface ChatbotProps {
+  onCustomerCapture?: (customer: Customer) => void;
+}
+
+export const Chatbot: React.FC<ChatbotProps> = ({ onCustomerCapture }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [session, setSession] = useState<ChatSession | null>(null);
+  const [inputMessage, setInputMessage] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const [showCustomerForm, setShowCustomerForm] = useState(false);
+  const [customerData, setCustomerData] = useState<Partial<Customer>>({});
+  
+  const chatbotService = useRef(new ChatbotService());
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isOpen && !session) {
+      const newSession = chatbotService.current.createSession();
+      setSession(newSession);
+    }
+  }, [isOpen, session]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [session?.messages]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleSendMessage = async () => {
+    if (!inputMessage.trim() || !session) return;
+
+    setIsTyping(true);
+    const messages = chatbotService.current.processMessage(session.id, inputMessage);
+    
+    // Update session state
+    const updatedSession = chatbotService.current.getSession(session.id);
+    if (updatedSession) {
+      setSession({ ...updatedSession });
+    }
+
+    setInputMessage('');
+    
+    // Simulate typing delay
+    setTimeout(() => {
+      setIsTyping(false);
+    }, 1000);
+
+    // Check if we should show customer form
+    if (inputMessage.toLowerCase().includes('order') || inputMessage.toLowerCase().includes('buy')) {
+      setTimeout(() => {
+        setShowCustomerForm(true);
+      }, 2000);
+    }
+  };
+
+  const handleCustomerSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (customerData.name && customerData.phone && customerData.location) {
+      if (session) {
+        chatbotService.current.updateCustomerInfo(session.id, customerData);
+        const updatedSession = chatbotService.current.getSession(session.id);
+        if (updatedSession) {
+          setSession({ ...updatedSession });
+        }
+      }
+      
+      onCustomerCapture?.(customerData as Customer);
+      setShowCustomerForm(false);
+      
+      // Add confirmation message
+      if (session) {
+        chatbotService.current.processMessage(
+          session.id, 
+          `Thank you ${customerData.name}! I've saved your details. How can I help you with your order?`
+        );
+        const updatedSession = chatbotService.current.getSession(session.id);
+        if (updatedSession) {
+          setSession({ ...updatedSession });
+        }
+      }
+    }
+  };
+
+  const formatMessage = (message: string) => {
+    return message.split('\n').map((line, index) => (
+      <React.Fragment key={index}>
+        {line}
+        {index < message.split('\n').length - 1 && <br />}
+      </React.Fragment>
+    ));
+  };
+
+  return (
+    <>
+      {/* Chat Button */}
+      <motion.button
+        onClick={() => setIsOpen(true)}
+        className="fixed bottom-6 right-6 w-16 h-16 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-2xl flex items-center justify-center z-50 group"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        animate={{ 
+          boxShadow: isOpen ? 'none' : '0 0 0 0 rgba(59, 130, 246, 0.7)',
+        }}
+        transition={{
+          boxShadow: {
+            duration: 2,
+            repeat: Infinity,
+            repeatType: "reverse"
+          }
+        }}
+      >
+        <MessageCircle className="w-8 h-8 group-hover:scale-110 transition-transform" />
+        <div className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
+          <span className="text-xs font-bold text-white">1</span>
+        </div>
+      </motion.button>
+
+      {/* Chat Window */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            className="fixed bottom-24 right-6 w-96 h-[500px] bg-white rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden"
+          >
+            {/* Header */}
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                  <Bot className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="font-semibold">DijuTech Assistant</h3>
+                  <p className="text-xs text-blue-100">Online • Typically replies instantly</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="text-white/80 hover:text-white p-1"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Messages */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+              {session?.messages.map((message) => (
+                <motion.div
+                  key={message.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+                >
+                  <div className={`flex items-start space-x-2 max-w-[80%] ${
+                    message.type === 'user' ? 'flex-row-reverse space-x-reverse' : ''
+                  }`}>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                      message.type === 'user' 
+                        ? 'bg-blue-600 text-white' 
+                        : 'bg-gray-200 text-gray-600'
+                    }`}>
+                      {message.type === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
+                    </div>
+                    <div className={`rounded-2xl px-4 py-2 ${
+                      message.type === 'user'
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-white text-gray-800 shadow-sm'
+                    }`}>
+                      <p className="text-sm leading-relaxed">
+                        {formatMessage(message.message)}
+                      </p>
+                      <p className="text-xs mt-1 opacity-70">
+                        {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+              
+              {isTyping && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="flex justify-start"
+                >
+                  <div className="flex items-center space-x-2">
+                    <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+                      <Bot className="w-4 h-4 text-gray-600" />
+                    </div>
+                    <div className="bg-white rounded-2xl px-4 py-2 shadow-sm">
+                      <div className="flex space-x-1">
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* Customer Form Modal */}
+            <AnimatePresence>
+              {showCustomerForm && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 bg-black/50 flex items-center justify-center p-4"
+                >
+                  <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.8, opacity: 0 }}
+                    className="bg-white rounded-xl p-6 w-full max-w-sm"
+                  >
+                    <h3 className="text-lg font-semibold mb-4">Contact Information</h3>
+                    <form onSubmit={handleCustomerSubmit} className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          <User className="w-4 h-4 inline mr-1" />
+                          Full Name *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={customerData.name || ''}
+                          onChange={(e) => setCustomerData(prev => ({ ...prev, name: e.target.value }))}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          placeholder="Enter your name"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          <Phone className="w-4 h-4 inline mr-1" />
+                          Phone Number *
+                        </label>
+                        <input
+                          type="tel"
+                          required
+                          value={customerData.phone || ''}
+                          onChange={(e) => setCustomerData(prev => ({ ...prev, phone: e.target.value }))}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          placeholder="+234 XXX XXX XXXX"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          <MapPin className="w-4 h-4 inline mr-1" />
+                          Location *
+                        </label>
+                        <select
+                          required
+                          value={customerData.location || ''}
+                          onChange={(e) => setCustomerData(prev => ({ ...prev, location: e.target.value }))}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        >
+                          <option value="">Select your location</option>
+                          <option value="Lagos Mainland">Lagos Mainland</option>
+                          <option value="Lagos Island">Lagos Island</option>
+                          <option value="Abuja">Abuja</option>
+                          <option value="Port Harcourt">Port Harcourt</option>
+                          <option value="Kano">Kano</option>
+                          <option value="Ibadan">Ibadan</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
+                      
+                      <div className="flex space-x-3">
+                        <button
+                          type="button"
+                          onClick={() => setShowCustomerForm(false)}
+                          className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </form>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Input */}
+            <div className="p-4 border-t bg-white">
+              <div className="flex space-x-2">
+                <input
+                  type="text"
+                  value={inputMessage}
+                  onChange={(e) => setInputMessage(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                  placeholder="Type your message..."
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+                <button
+                  onClick={handleSendMessage}
+                  disabled={!inputMessage.trim()}
+                  className="w-10 h-10 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white rounded-full flex items-center justify-center transition-colors"
+                >
+                  <Send className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+};

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Content Security Policy (optional, strict) -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src *; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
+    />
+    <!-- Prevent clickjacking -->
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <!-- XSS Protection (basic) -->
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <!-- SEO -->
+    <meta
+      name="description"
+      content="Smart locks, CCTV cameras, and home automation devices in Nigeria. Delivered and installed fast by DijuTech Solutions."
+    />
+    <meta
+      name="keywords"
+      content="smart lock, CCTV, home automation, Nigeria tech, smart devices,, installation"
+    />
+    <meta name="author" content="Justice Israel" />
+
+    <!-- Open Graph (for social media sharing) -->
+<meta property="og:title" content="DigitaJustice Tech Solutions">
+<meta property="og:description" content="We sell and install smart locks, CCTV, and home automation products in Nigeria.">
+<meta property="og:image" content="https://yourdomain.com/images/og-image.jpg"> <!-- Replace with your hosted image -->
+<meta property="og:url" content="https://yourdomain.com">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card (optional) -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DijuTech Solutions">
+<meta name="twitter:description" content="Smart locks, CCTV, and more – get secure tech delivered and installed.">
+<meta name="twitter:image" content="https://yourdomain.com/images/twitter-image.jpg">
+
+    <title>DijuTech Solutions Smart Home Landing Page</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script src="index.js"></script>
+
+    <!-- Chatbase Chatbot Script -->
+    <script>
+      (function () {
+        if (!window.chatbase || window.chatbase("getState") !== "initialized") {
+          window.chatbase = (...arguments) => {
+            if (!window.chatbase.q) {
+              window.chatbase.q = [];
+            }
+            window.chatbase.q.push(arguments);
+          };
+          window.chatbase = new Proxy(window.chatbase, {
+            get(target, prop) {
+              if (prop === "q") {
+                return target.q;
+              }
+              return (...args) => target(prop, ...args);
+            },
+          });
+        }
+        const onLoad = function () {
+          const script = document.createElement("script");
+          script.src = "https://www.chatbase.co/embed.min.js";
+          script.id = "7WVpTjiegocponcHytbxq";
+          script.domain = "www.chatbase.co";
+          document.body.appendChild(script);
+        };
+        if (document.readyState === "complete") {
+          onLoad();
+        } else {
+          window.addEventListener("load", onLoad);
+        }
+      })();
+    </script>
+  </body>
+</html>
