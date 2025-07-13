@@ -7,7 +7,7 @@ export const products: Product[] = [
     description: 'Advanced keyless entry system with biometric and PIN access enhancing more security to the door.',
     price: 144350,
     originalPrice: 155350,
-    image: '/src/images/big-handle1.png',
+    image: '/images/big-handle1.png',
     features: [
       'Fingerprint & PIN Access',
       'Mobile App Control',
@@ -29,7 +29,7 @@ export const products: Product[] = [
     description: 'Solar 4-camera HD surveillance system with Dual lens cam & night vision',
     price: 95230,
     originalPrice: 117041,
-    image: '/src/images/cctv2.png',
+    image: '/images/cctv2.png',
     features: [
       '4 HD Cameras (1080p)',
       'Night Vision Technology',
@@ -49,7 +49,7 @@ export const products: Product[] = [
     description: 'Complete home automation system with voice control',
     price: 32415,
     originalPrice: 44603,
-    image: '/src/images/switch22.png',
+    image: '/images/switch22.png',
     features: [
       'Voice Control Integration',
       'Smart Lighting Control',
@@ -69,7 +69,7 @@ export const products: Product[] = [
     description: 'Advanced Smart Lock with Facial Recognition, CCTV monitoring & Audio/Video Intercom and many more...',
     price: 207211,
     originalPrice: 219303,
-    image: '/src/images/k30-lock1.png',
+    image: '/images/k30-lock1.png',
     features: [
       'Facial Recognition',
       'One-time password',
@@ -89,7 +89,7 @@ export const products: Product[] = [
     description: 'A premium Big handle Lock With Cam that combines robustdesign and integrated surveillance delivering high-end security and convenience',
     price: 139500,
     originalPrice: 147500,
-    image: '/src/images/handlecam.png',
+    image: '/images/handlecam.png',
     features: [
       'HD Camera & Display',
       'Fingeprint',
@@ -109,7 +109,7 @@ export const products: Product[] = [
     description: 'Ultra HD smart projector with wireless connectivity',
     price: 108142,
     originalPrice: 132620,
-    image: '/src/images/projector1.png',
+    image: '/images/projector1.png',
     features: [
       '4K Ultra HD Resolution',
       'Wireless Screen Mirroring',

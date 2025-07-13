@@ -9,21 +9,21 @@ export const TrustSection: React.FC = () => {
       location: "Lekki, Lagos",
       rating: 5,
       text: "Excellent service! The smart lock installation was seamless and the team was very professional.",
-      image: "/src/images/testi2.jpeg"
+      image: "/images/testi2.jpeg"
     },
     {
       name: "Mr. Okafor",
       location: "Abuja",
       rating: 5,
       text: "Best investment for home security. The CCTV system works perfectly and customer support is outstanding.",
-      image: "/src/images/testi-1.jpeg"
+      image: "/images/testi-1.jpeg"
     },
     {
       name: "Dr. Fatima",
       location: "Ikeja, Lagos",
       rating: 5,
       text: "Smart home automation has made my life so much easier. Highly recommend DijuTech Solutions!",
-      image: "/src/images/testi-3last.jpg"
+      image: "/images/testi-3last.jpg"
     }
   ];
 

@@ -102,7 +102,7 @@ export const Hero: React.FC<HeroProps> = ({ onWhatsAppClick }) => {
                 className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-3 border-white overflow-hidden"
               >
                 <img 
-                  src="/src/images/hr-pr-3.jpg" 
+                  src="/images/hr-pr-3.jpg" 
                   alt="Happy Customer 1"
                   className="w-full h-full object-cover"
                 />
@@ -114,7 +114,7 @@ export const Hero: React.FC<HeroProps> = ({ onWhatsAppClick }) => {
                 className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-3 border-white overflow-hidden"
               >
                 <img 
-                  src="/src/images/he_per.jpg" 
+                  src="/images/he_per.jpg" 
                   alt="Happy Customer 2"
                   className="w-full h-full object-cover"
                 />
@@ -126,7 +126,7 @@ export const Hero: React.FC<HeroProps> = ({ onWhatsAppClick }) => {
                 className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-3 border-white overflow-hidden"
               >
                 <img 
-                  src="/src/images/her-p.jpg" 
+                  src="/images/her-p.jpg" 
                   alt="Happy Customer 3"
                   className="w-full h-full object-cover"
                 />
