@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Phone, Mail } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
 import { Header } from './components/Header';
@@ -15,8 +15,14 @@ import { NotificationSystem } from './components/NotificationSystem';
 import { AdminRoute } from './components/admin/AdminRoute';
 import { ChatbaseController } from './components/ChatbaseController';
 import { Product, Customer, Order } from './types';
+import { setupMetaPixel } from './utils/setupMetaPixel';
 
 function App() {
+useEffect(() => {
+  setupMetaPixel();
+}, []);
+
+
   const [capturedCustomers, setCapturedCustomers] = useState<Customer[]>([]);
   const [currentView, setCurrentView] = useState<'main' | 'admin'>('main');
 
