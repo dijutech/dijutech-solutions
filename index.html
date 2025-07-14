@@ -5,12 +5,8 @@
     <link rel="shortcut icon" href="/src/images/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Content Security Policy (optional, strict) -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; img-src *; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
-    />
-    <!-- Prevent clickjacking -->
-    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'self' data: blob:; script-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline';"/>
+
     <!-- XSS Protection (basic) -->
     <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
     <!-- SEO -->

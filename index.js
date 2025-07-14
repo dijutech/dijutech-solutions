@@ -1,1 +1,6 @@
-document.querySelector(".year").innerHTML = new Date().getFullYear()
+window.addEventListener("DOMContentLoaded", () => {
+  const yearElement = document.querySelector(".year");
+  if (yearElement) {
+    yearElement.innerHTML = new Date().getFullYear();
+  }
+});
