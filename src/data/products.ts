@@ -7,7 +7,7 @@ export const products: Product[] = [
     description: 'Advanced keyless entry system with biometric and PIN access enhancing more security to the door.',
     price: 144350,
     originalPrice: 155350,
-    image: '/images/big-handle1.png',
+    image: '/images/big-handle1.webp',
     features: [
       'Fingerprint & PIN Access',
       'Mobile App Control',
@@ -29,7 +29,7 @@ export const products: Product[] = [
     description: 'Solar 4-camera HD surveillance system with Dual lens cam & night vision',
     price: 95230,
     originalPrice: 117041,
-    image: '/images/cctv2.png',
+    image: '/images/cctv2.webp',
     features: [
       '4 HD Cameras (1080p)',
       'Night Vision Technology',
@@ -49,7 +49,7 @@ export const products: Product[] = [
     description: 'Complete home automation system with voice control',
     price: 32415,
     originalPrice: 44603,
-    image: '/images/switch22.png',
+    image: '/images/switch22.webp',
     features: [
       'Voice Control Integration',
       'Smart Lighting Control',

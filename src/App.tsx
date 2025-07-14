@@ -383,8 +383,8 @@ Please provide payment assistance. Thank you!`
         </div>
       </footer>
 
-      {/* Intelligent Chatbot
-      <Chatbot onCustomerCapture={handleCustomerCapture} /> */}
+      {/* Intelligent Chatbot */}
+      {/* <Chatbot onCustomerCapture={handleCustomerCapture} /> */}
     </div>
   );
 }

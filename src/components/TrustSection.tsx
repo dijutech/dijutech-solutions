@@ -23,7 +23,7 @@ export const TrustSection: React.FC = () => {
       location: "Ikeja, Lagos",
       rating: 5,
       text: "Smart home automation has made my life so much easier. Highly recommend DijuTech Solutions!",
-      image: "/images/testi-3last.jpg"
+      image: "/images/testi-3last.webp"
     }
   ];
 

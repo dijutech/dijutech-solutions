@@ -9,7 +9,7 @@ export const productMedia: ProductMedia = {
     {
       id: 'sdl-img-1',
       type: 'image',
-      src: '/images/big-handle1.png',
+      src: '/images/big-handle1.webp',
       alt: 'Smart Door Lock Pro - Front View',
       title: 'Sleek Design with Fingerprint Scanner'
     },
@@ -23,7 +23,7 @@ export const productMedia: ProductMedia = {
     {
       id: 'sdl-img-3',
       type: 'image',
-      src: '/images/big-handle3.png',
+      src: '/images/big-handle3.webp',
       alt: 'Smart Door Lock Pro - Mobile App Interface',
       title: 'Mobile App Control Interface'
     },
@@ -71,21 +71,21 @@ export const productMedia: ProductMedia = {
     {
       id: 'ha-img-1',
       type: 'image',
-      src: '/images/smart-switch11.png',
+      src: '/images/smart-switch11.jpg',
       alt: 'Smart Home Automation Kit - Control Hub',
       title: 'Central Control Hub'
     },
     {
       id: 'ha-img-2',
       type: 'image',
-      src: '/images/switch22.png',
+      src: '/images/switch22.webp',
       alt: 'Smart Home Automation Kit - Voice Control',
       title: 'Voice Control Integration'
     },
     {
       id: 'ha-img-3',
       type: 'image',
-      src: '/images/switch33.png',
+      src: '/images/switch33.webp',
       alt: 'Smart Home Automation Kit - Energy Monitoring',
       title: 'Energy Monitoring Dashboard'
     },
@@ -93,7 +93,7 @@ export const productMedia: ProductMedia = {
       id: 'ha-video-1',
       type: 'video',
       src: '/images/smart-switchv.mp4',
-      thumbnail: '/images/switch22.png',
+      thumbnail: '/images/switch22.webp',
       alt: 'Smart Home Automation Kit - Full Demo',
       title: 'Complete Home Automation Experience'
     }
@@ -171,14 +171,14 @@ export const productMedia: ProductMedia = {
     {
       id: 'sp-img-2',
       type: 'image',
-      src: '/images/projector22.png',
+      src: '/images/projector22.webp',
       alt: '4K Smart Projector - Home Theater Setup',
       title: 'Perfect Home Theater Experience'
     },
     {
       id: 'sp-img-3',
       type: 'image',
-      src: '/images/projector33.png',
+      src: '/images/projector33.webp',
       alt: '4K Smart Projector - Wireless Connectivity',
       title: 'Wireless Screen Mirroring'
     },
@@ -186,7 +186,7 @@ export const productMedia: ProductMedia = {
       id: 'sp-video-1',
       type: 'video',
       src: '/images/projector-v.mp4',
-      thumbnail: '/images/projector22.png',
+      thumbnail: '/images/projector22.webp',
       alt: '4K Smart Projector - Quality Demo',
       title: 'See the Amazing 4K Quality',
     }
