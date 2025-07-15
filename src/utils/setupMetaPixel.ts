@@ -6,38 +6,41 @@ declare global {
 
   interface FBQ {
     (...args: any[]): void;
-    queue?: any[];
+    callMethod?: (...args: any[]) => void;
+    push?: (...args: any[]) => void;
     loaded?: boolean;
     version?: string;
-    q?: any[];
-    l?: number;
+    queue?: any[];
   }
 }
 
 export const setupMetaPixel = () => {
   if (typeof window === 'undefined') return;
 
-  const w = window as Window;
-  
-  // Avoid re-initialization
-if (typeof w.fbq === 'function') return;
-  
-  const fbq: FBQ = function (...args: any[]) {
-    (fbq.q = fbq.q || []).push(args);
-  };
-  
-  fbq.loaded = true;
-  fbq.version = '2.0';
-  fbq.q = [];
-  fbq.l = Date.now();
-  
-  w.fbq = fbq;
-  
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = 'https://connect.facebook.net/en_US/fbevents.js';
-  document.head.appendChild(script);
+  const w = window as any;
 
-  w.fbq('init', '715356251468666');
+  if (typeof w.fbq === 'function') return;
+
+  (function (f: any, b: any, e: any, v: any, n?: any, t?: any, s?: any) {
+    if (f.fbq) return;
+    n = function (...args: any[]) {
+      (n as FBQ).callMethod
+        ? (n as FBQ).callMethod!(...args)
+        : ((n as FBQ).queue = (n as FBQ).queue || []).push(args);
+    };
+    (f.fbq as FBQ) = n as FBQ;
+    f._fbq = f.fbq;
+    f.fbq.push = n;
+    f.fbq.loaded = true;
+    f.fbq.version = '2.0';
+    f.fbq.queue = [];
+    t = b.createElement(e);
+    t.async = true;
+    t.src = v;
+    s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s);
+  })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+
+  w.fbq('init', '1346544250415336');
   w.fbq('track', 'PageView');
 };
