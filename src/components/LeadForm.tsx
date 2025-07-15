@@ -44,6 +44,10 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSubmit }) => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
+      // ✅ Track the WhatsApp click as a Lead
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead');
+    }
     e.preventDefault();
     onSubmit(formData);
   };

@@ -14,6 +14,11 @@ interface ProductCatalogProps {
 }
 
 export const ProductCatalog: React.FC<ProductCatalogProps> = ({}) => {
+  // ✅ Track the WhatsApp click as a Lead
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead');
+    }
+    
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [showOrderModal, setShowOrderModal] = useState(false);

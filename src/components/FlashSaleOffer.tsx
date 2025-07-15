@@ -59,6 +59,10 @@ export const FlashSaleOffer: React.FC<FlashSaleOfferProps> = ({ onWhatsAppClaim 
 
   const handleClaimOffer = () => {
     onWhatsAppClaim('SMARTSECURE');
+    // ✅ Track the WhatsApp click as a Lead
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead');
+    }
   };
 
   const formatTime = (time: number) => {

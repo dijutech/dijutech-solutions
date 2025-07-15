@@ -51,6 +51,11 @@ export const PaymentSuccess: React.FC = () => {
   };
 
   const sendConfirmationMessage = () => {
+    // ✅ Track the WhatsApp click as a Lead
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead');
+    }
+
     const message = encodeURIComponent(
       `✅ PAYMENT CONFIRMED - Order ${orderDetails?.metadata?.order_id || reference}
 
@@ -85,6 +90,10 @@ Need immediate assistance? Reply to this message!`
   };
 
   const handleContactSupport = () => {
+    // ✅ Track the WhatsApp click as a Lead
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead');
+    }
     const message = encodeURIComponent(
       `Hi! I just completed payment for Order ${orderDetails?.metadata?.order_id || reference}.
 

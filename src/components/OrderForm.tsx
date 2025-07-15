@@ -66,6 +66,16 @@ export const OrderForm: React.FC<OrderFormProps> = ({ product, onClose, onOrderC
         price: product.price
       };
 
+      // 🔥 Fire Meta Pixel Event with product info
+  if (typeof window.fbq === 'function') {
+    window.fbq('track', 'Lead', {
+      content_name: product.name,
+      content_category: 'Smart Home Product',
+      value: product.price,
+      currency: 'NGN',
+    });
+  }
+
       const order = orderService.createOrder(customer, [orderItem], data.paymentMethod);
 
       if (data.paymentMethod === 'whatsapp') {

@@ -7,6 +7,10 @@ interface StickyOfferBannerProps {
 }
 
 export const StickyOfferBanner: React.FC<StickyOfferBannerProps> = ({ onWhatsAppClaim }) => {
+  // ✅ Track the WhatsApp click as a Lead
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead');
+    }
   const [isVisible, setIsVisible] = useState(true);
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
 

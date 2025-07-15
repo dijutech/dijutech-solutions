@@ -21,6 +21,10 @@ export const WhatsAppOrderModal: React.FC<WhatsAppOrderModalProps> = ({
   isOpen,
   onClose
 }) => {
+  // ✅ Track the WhatsApp click as a Lead
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead');
+    }
   const [formData, setFormData] = useState<OrderForm>({
     fullName: '',
     phoneNumber: '',

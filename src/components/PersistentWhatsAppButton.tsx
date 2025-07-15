@@ -10,9 +10,14 @@ export const PersistentWhatsAppButton: React.FC<PersistentWhatsAppButtonProps> =
   phoneNumber = '2349137487240', 
   onPaymentChat 
 }) => {
+  // ✅ Track the WhatsApp click as a Lead
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead');
+    }
   const [showTooltip, setShowTooltip] = useState(false);
   const [animate, setAnimate] = useState(false);
   const [showQuickActions, setShowQuickActions] = useState(false);
+
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -24,6 +29,10 @@ export const PersistentWhatsAppButton: React.FC<PersistentWhatsAppButtonProps> =
   }, []);
 
   const handleMainClick = () => {
+    // ✅ Track the WhatsApp click as a Lead
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead');
+    }
     if (onPaymentChat) {
       onPaymentChat();
     } else {
@@ -34,6 +43,10 @@ export const PersistentWhatsAppButton: React.FC<PersistentWhatsAppButtonProps> =
   };
 
   const handlePaymentHelp = () => {
+    // ✅ Track the WhatsApp click as a Lead
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead');
+    }
     const message = encodeURIComponent("Hi! I need help with payment options for my smart home order. Can you assist me?");
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
     window.open(whatsappUrl, '_blank');
@@ -41,6 +54,10 @@ export const PersistentWhatsAppButton: React.FC<PersistentWhatsAppButtonProps> =
   };
 
   const handleGeneralSupport = () => {
+    // ✅ Track the WhatsApp click as a Lead
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead');
+    }
     const message = encodeURIComponent("Hi! I have questions about your smart home products and services. Can you help?");
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
     window.open(whatsappUrl, '_blank');
